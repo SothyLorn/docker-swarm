@@ -1,0 +1,273 @@
+    1  clear
+    2  docker service ls
+    3  docker service delete edge_traefik 
+    4  la
+    5  nano traefik-stack.yml 
+    6  docker stack ls
+    7  docker stack rm edge
+    8  docker stack ls
+    9  docker service ls
+   10  docker node ls
+   11  systemctl stop docker
+   12  systemctl start doker
+   13  systemctl start docker
+   14  docker network ls
+   15  nano taskmate-stack.yml
+   16  docker stack deploy -c taskmate-stack.yml taskmate
+   17  docker service ps taskmate_taskmate
+   18  mkdir certs
+   19  cd certs/
+   20  ls
+   21  nano fullchain.pem
+   22  nano privkey.pem
+   23  docker secret create taskmate_site_pem taskmate.pem
+   24  cat fullchain.pem privkey.pem > taskmate.pem
+   25  docker secret create taskmate_site_pem taskmate.pem
+   26  shred -u taskmate.pem
+   27  cd ..
+   28  ls
+   29  mkdir haproxy
+   30  cd haproxy/
+   31  ls
+   32  nano haproxy.cfg
+   33  nano haproxy-stack.yml
+   34  docker stack deploy -c haproxy-stack.yml edge
+   35  docker service logs -f edge_haproxy
+   36  docker service lis
+   37  docker service ls
+   38  docker ps -a
+   39  docker ps 
+   40  docker service logs taskmate_taskmate
+   41  cd ..
+   42  ls
+   43  nano taskmate-stack.yml 
+   44  docker stack deploy -c taskmate-stack.yml 
+   45  docker stack deploy -c taskmate-stack.yml taskmate 
+   46  docker service ps taskmate_taskmate
+   47  docker service ls
+   48  docker service logs taskmate_taskmate
+   49  docker ps -a
+   50  docker service ls
+   51  docker service ps
+   52  docker service ps taskmate
+   53  docker service ps taskmate_taskmate
+   54  docker service logs edge_haproxy | tail -30
+   55  ls
+   56  cat taskmate-stack.yml 
+   57  ls
+   58  cd haproxy/
+   59  ls
+   60  cat haproxy.cfg 
+   61  nano haproxy.cfg 
+   62  docker config create haproxy_cfg_v2 haproxy.cfg
+   63  docker service update   --config-rm haproxy_cfg   --config-add source=haproxy_cfg_v2,target=/usr/local/etc/haproxy/haproxy.cfg   edge_haproxy
+   64  docker service update   --config-rm haproxy_cfg   --config-add source=haproxy_cfg_v2,target=/usr/local/etc/haproxy/haproxy.cfg   edge_haproxy
+   65  docker config ls
+   66  docker service update   --config-rm edge_haproxy_cfg   --config-add source=haproxy_cfg_v2,target=/usr/local/etc/haproxy/haproxy.cfg   edge_haproxy
+   67  docker service update --update-order stop-first edge_haproxy
+   68  docker service update --rollback edge_haproxy
+   69  ls
+   70  nano haproxy-stack.yml 
+   71  docker stack deploy -f haproxy-stack.yml
+   72  docker service ls
+   73  docker config ls
+   74  docker service update   --config-rm edge_haproxy_cfg   --config-add source=haproxy_cfg_v2,target=/usr/local/etc/haproxy/haproxy.cfg   edge_haproxy
+   75  clear
+   76  docker stack ls
+   77  docker config ls
+   78  docker config -h
+   79  docker config inspect vwm6w6lobz3uaajns6e0nwxu6
+   80  docker config ls
+   81  docker config rm edge_haproxy_cfg
+   82  docker config ls
+   83  systemctl stop docker
+   84  systemctl start docker
+   85  docekr service ls
+   86  docker service ls
+   87  ls
+   88  cd ..
+   89  ls
+   90  rm -rf traefik-stack.yml 
+   91  ls
+   92  mkdir employee-api
+   93  ls
+   94  cd employee-api/
+   95  ls
+   96  cp ../taskmate-stack.yml employee-stack.yml
+   97  nano employee-stack.yml 
+   98  docker stack create employee-stack.yml
+   99  docker stack deploy employee-stack.yml employee
+  100  docker stack deploy -c employee-stack.yml employee
+  101  docker service ls
+  102  docker stack ls
+  103  docker service ls
+  104  docker service logs employee_employee-api
+  105  docker service ls
+  106  docker service logs employee_employee-api
+  107  docker service log employee_employee-api
+  108  docker service logs employee_employee-api
+  109  docker service ls
+  110  cd ..
+  111  ls
+  112  cd haproxy/
+  113  ls
+  114  nano haproxy.cfg 
+  115  docker config create haproxy_cfg_v3 haproxy.cfg
+  116  docker service update   --config-rm haproxy_cfg_v2   --config-add source=haproxy_cfg_v3,target=/usr/local/etc/haproxy/haproxy.cfg   edge_haproxy
+  117  docker service ps edge_haproxy
+  118  docker service rm edge_haproxy.xi99vemns7gtf5xwcyxczpmac edge_haproxy.xi99vemns7gtf5xwcyxczpmac edge_haproxy.xi99vemns7gtf5xwcyxczpmac
+  119  docker serivce ls
+  120  docker service ls
+  121  docker service ps 
+  122  docker service ps edge_haproxy
+  123  ls
+  124  nano haproxy-stack.yml 
+  125  docker service rm edge_haproxy
+  126  docker service ps edge_haproxy
+  127  docker stack deploy -c haproxy-stack.yml edge
+  128  docker stack ls
+  129  docker servic els
+  130  docker service ls
+  131  ls
+  132  cd ..
+  133  ls
+  134  cd employee-api/
+  135  ls
+  136  nano employee-stack.yml 
+  137  docker stack deploy -c employee-stack.yml employee
+  138  nano employee-stack.yml 
+  139  docker stack deploy -c employee-stack.yml employee
+  140  docker ps -a
+  141  docker service ls
+  142  nano employee-stack.yml 
+  143  docker stack deploy -c employee-stack.yml employee
+  144  docker service ls
+  145  cd ..
+  146  ls
+  147  mkdir taskmate
+  148  mv taskmate-stack.yml taskmate
+  149  ls
+  150  mv employee-api/ employee
+  151  ls
+  152  cd employee/m
+  153  cd employee
+  154  ls
+  155  nano employee-stack.yml 
+  156  docker stack deploy -c employee-stack.yml employee 
+  157  docker stack ls
+  158  docker service ls
+  159  cd ..
+  160  ls
+  161  cd haproxy/
+  162  ls
+  163  nano haproxy.cfg 
+  164  docker stack ls
+  165  docker stack lsdocker stack deploy -c haproxy-stack.yml edge
+  166  docker stack deploy -c haproxy-stack.yml edge
+  167  docker config ls
+  168  docker config create haproxy_cfg_v4 haproxy.cfg
+  169  ls
+  170  nano haproxy-stack.yml 
+  171  docker stack deploy -c haproxy-stack.yml edge
+  172  docker service ls
+  173  docker servic logs edge_haproxy
+  174  docker service logs edge_haproxy
+  175  ls
+  176  nano haproxy.cfg 
+  177  docker service ls
+  178  cd ..
+  179  ls
+  180  cd employee/
+  181  ls
+  182  nano employee-stack.yml 
+  183  docker stack deploy -c employee-stack.yml employee
+  184  docker service ls
+  185  ls
+  186  cd ..
+  187  ls
+  188  cd haproxy/
+  189  ls
+  190  docker config create haproxy_cfg_v5 haproxy.cfg
+  191  nano haproxy-stack.yml 
+  192  docker stack deploy -c haproxy-stack.yml edge
+  193  docker service ls
+  194  docker service ps edge_haproxy
+  195  ls
+  196  nano haproxy-stack.yml 
+  197  docker stack deploy -c haproxy-stack.yml edge
+  198  docker service ps edge_haproxy
+  199  ls
+  200  cd ..
+  201  ls
+  202  docker stack ls
+  203  docker stack rm taskmate
+  204  ls
+  205  mkdir taskmate-db
+  206  ls
+  207  cp taskmate/taskmate-stack.yml taskmate-db/
+  208  ls
+  209  cd taskmate
+  210  ls
+  211  cd ..
+  212  ls
+  213  cd taskmate-db/
+  214  ls
+  215  nano taskmate-stack.yml 
+  216  python3 -c 'import secrets;print(secrets.token_urlsafe(64))' |   docker secret create taskmate_django_key_v1 -
+  217  openssl rand -base64 32 | tr -d '\n' |   docker secret create taskmate_db_password_v1 -
+  218  read -rs PGPASS
+  219  [200~unset PGPASS~
+  220  PGPASS=dev123
+  221  read -rs PGPASS
+  222  $PGPASS=dev123
+  223  read -rs PGPASS
+  224  printf '%s' "$PGPASS"
+  225  unset PGPASS
+  226  read -rs PGPASS
+  227  read -rs $PGPASS
+  228  read -rs dev123
+  229  printf '%s' "$PGPASS"
+  230  read -rs dev123
+  231  docker secret ls
+  232  docker secret inspect taskmate_db_password_v1 
+  233  docker secret rm taskmate_db_password_v1
+  234  ls
+  235  docker secret ls
+  236  docker secret rm taskmate_django_key_v1
+  237  ls
+  238  nano .env
+  239  docker secret create taskmate_cred ./.env
+  240  ls
+  241  nano taskmate-stack.yml 
+  242  ls
+  243  cd ..
+  244  ls
+  245  git clone https://github.com/SothyLorn/docker-swarm.git
+  246  ls
+  247  mv certs/ docker-swarm/
+  248  mv employee/ docker-swarm/
+  249  mv haproxy/ docker-swarm/
+  250  ls
+  251  mv taskmate docker-swarm/
+  252  ls
+  253  mv taskmate-db/ docker-swarm/
+  254  ls
+  255  cd docker-swarm/
+  256  ls
+  257  git add .
+  258  git commit -m 'first comiit'
+  259  git config --global user.email "sothylorn14.kh@gmail.com"
+  260  git config --global user.name "Sothy Lorn"
+  261  git commit -m 'first comiit'
+  262  git push origin -u main
+  263  ls
+  264  cd taskmate-db/
+  265  ls
+  266  nano taskmate-stack.yml 
+  267  cd ..
+  268  ls
+  269  cd ..
+  270  ls
+  271  cd docker-swarm/
+  272  ls
+  273  history > history.txt
