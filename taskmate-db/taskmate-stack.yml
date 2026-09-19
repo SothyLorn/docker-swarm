@@ -3,7 +3,7 @@ version: "3.8"
 
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:12
     environment:
       POSTGRES_USER: taskmate
       POSTGRES_DB: taskmate_db
@@ -34,7 +34,7 @@ services:
         condition: on-failure
 
   taskmate:
-    image: registry.sothy.site/taskmate:1.0.0
+    image: sothy/taskmate:postgresql-db
     environment:
       DJANGO_DEBUG: "False"
       DJANGO_ALLOWED_HOSTS: "taskmate.sothy.site,localhost,127.0.0.1"
