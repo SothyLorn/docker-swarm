@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: taskmate
       POSTGRES_DB: taskmate_db
-      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_PASSWORD: /run/secrets/db_password
       PGDATA: /var/lib/postgresql/data/pgdata
     secrets:
       - source: taskmate_db_password_v1
@@ -39,10 +39,10 @@ services:
       DJANGO_DEBUG: "False"
       DJANGO_ALLOWED_HOSTS: "taskmate.sothy.site,localhost,127.0.0.1"
       DJANGO_CSRF_TRUSTED_ORIGINS: "https://taskmate.sothy.site"
-      DJANGO_SECRET_KEY_FILE: /run/secrets/django_key
+      DJANGO_SECRET_KEY: /run/secrets/django_key
       HOST: postgres
       DB_USER: taskmate
-      DB_PASSWORD_FILE: /run/secrets/db_password
+      DB_PASSWORD: /run/secrets/db_password
       DB_DATABASE: taskmate_db
       DB_PORT: "5432"
     secrets:
