@@ -1,0 +1,60 @@
+# employee-stack.yml
+version: "3.8"
+
+services:
+  employee-api:
+    image: sothy/employee-api:v12
+    networks:
+      - proxy-net
+      - app-net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4000/version"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 20s
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+        preferences:
+          - spread: node.hostname
+      update_config:
+        order: start-first
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      rollback_config:
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+  employee-ui:
+    image: sothy/employee-ui:sothy-site
+    networks:
+      - proxy-net
+      - app-net
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+        preferences:
+          - spread: node.hostname
+      update_config:
+        order: start-first
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      rollback_config:
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+
+networks:
+  proxy-net:
+    external: true
+  app-net:
+    driver: overlay

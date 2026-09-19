@@ -1,0 +1,38 @@
+# taskmate-stack.yml
+version: "3.8"
+
+services:
+  taskmate:
+    image: sothy/taskmate
+    networks:
+      - proxy-net
+      - app-net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8000"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 20s
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+        preferences:
+          - spread: node.hostname
+      update_config:
+        order: start-first
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      rollback_config:
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+
+networks:
+  proxy-net:
+    external: true
+  app-net:
+    driver: overlay

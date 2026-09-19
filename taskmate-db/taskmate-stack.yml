@@ -1,0 +1,88 @@
+# taskmate-stack.yml
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: taskmate
+      POSTGRES_DB: taskmate_db
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    secrets:
+      - source: taskmate_db_password_v1
+        target: db_password
+        mode: 0400
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taskmate -d taskmate_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.db == primary
+      update_config:
+        order: stop-first
+      restart_policy:
+        condition: on-failure
+
+  taskmate:
+    image: registry.sothy.site/taskmate:1.0.0
+    environment:
+      DJANGO_DEBUG: "False"
+      DJANGO_ALLOWED_HOSTS: "taskmate.sothy.site,localhost,127.0.0.1"
+      DJANGO_CSRF_TRUSTED_ORIGINS: "https://taskmate.sothy.site"
+      DJANGO_SECRET_KEY_FILE: /run/secrets/django_key
+      HOST: postgres
+      DB_USER: taskmate
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      DB_DATABASE: taskmate_db
+      DB_PORT: "5432"
+    secrets:
+      - source: taskmate_django_key_v1
+        target: django_key
+        mode: 0400
+      - source: taskmate_db_password_v1
+        target: db_password
+        mode: 0400
+    networks:
+      - proxy-net
+      - app-net
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+        preferences:
+          - spread: node.hostname
+      update_config:
+        order: start-first
+        parallelism: 1
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+
+volumes:
+  pgdata:
+
+secrets:
+  taskmate_django_key_v1:
+    external: true
+  taskmate_db_password_v1:
+    external: true
+
+networks:
+  proxy-net:
+    external: true
+  app-net:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
